@@ -10,7 +10,7 @@ namespace orderManagement.Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<OrderRequirementsBase> builder)
         {
             builder.HasOne(x => x.Order)
-                .WithOne()
+                .WithOne(o=>o.RequirementBase)
                 .HasForeignKey<Order>(o=>o.Id)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
@@ -27,7 +27,7 @@ namespace orderManagement.Infrastructure.Data.Config
                 .HasDefaultValue(Thickness.MiddleThick)
                 .IsRequired();
             builder.HasMany(x => x.UploadFiles)
-                .WithOne()
+                .WithOne(uf=>uf.OrderRequirementsBase)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
             builder.Property(x => x.DueDate)

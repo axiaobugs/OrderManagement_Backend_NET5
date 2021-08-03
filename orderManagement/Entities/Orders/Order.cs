@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using orderManagement.Entities.Customers;
+using orderManagement.Entities.Employees;
 using System.Collections.Generic;
-using orderManagement.Entities.Customers;
 
 namespace orderManagement.Entities.Orders
 {
@@ -30,6 +30,7 @@ namespace orderManagement.Entities.Orders
         public OrderStatus OrderStatus { get; set; }
         public Customer Customer{ get; set; }
         public int CustomerId { get; set; }
+        public List<Employee> Employees { get; set; } = new List<Employee>();
 
     }
 }

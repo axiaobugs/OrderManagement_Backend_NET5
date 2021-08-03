@@ -15,7 +15,7 @@ namespace orderManagement.Infrastructure.Data.Config
                     c => c.ToString(),
                     c => (Category) Enum.Parse(typeof(Category), c));
             builder.HasOne(x => x.Order)
-                .WithMany()
+                .WithMany(o=>o.OrderDetails)
                 .HasForeignKey(o=>o.OrderId);
         }
     }

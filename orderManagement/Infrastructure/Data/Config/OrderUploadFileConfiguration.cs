@@ -8,8 +8,8 @@ namespace orderManagement.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<OrderUploadFile> builder)
         {
-            builder.HasOne(x => x.Order)
-                .WithMany()
+            builder.HasOne(x => x.OrderRequirementsBase)
+                .WithMany(or=>or.UploadFiles)
                 .HasForeignKey(x => x.OrderId)
                 .IsRequired();
             builder.Property(x => x.OrderId)

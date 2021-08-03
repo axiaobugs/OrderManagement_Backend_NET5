@@ -3,6 +3,7 @@ using System.Reflection.Metadata.Ecma335;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using orderManagement.Entities.Customers;
+using orderManagement.Entities.Employees;
 using orderManagement.Entities.Orders;
 using orderManagement.Infrastructure.Data.Config;
 
@@ -20,14 +21,12 @@ namespace orderManagement.Infrastructure.Data
         public DbSet<OrderRequirementsBase> OrderRequirementsBases { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<OrderUploadFile> OrderUploadFiles { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Department> Departments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            // modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrderConfiguration).Assembly);
-            // modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrderRequirementBaseConfiguration).Assembly);
-            // modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerConfiguration).Assembly);
-            // modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrderDetailConfiguration).Assembly);
         }
 
     }

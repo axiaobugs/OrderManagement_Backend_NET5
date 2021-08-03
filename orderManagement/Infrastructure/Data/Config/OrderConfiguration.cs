@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using orderManagement.Entities.Employees;
 using orderManagement.Entities.Orders;
 
 namespace orderManagement.Infrastructure.Data.Config
@@ -11,20 +12,23 @@ namespace orderManagement.Infrastructure.Data.Config
         {
             // 
             builder.HasOne(o => o.Customer)
-                .WithMany()
+                .WithMany(c=>c.Orders)
                 .HasForeignKey(c => c.CustomerId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
             builder.Property(x => x.CustomerId)
                 .IsRequired();
             builder.HasOne(o => o.RequirementBase)
-                .WithOne()
+                .WithOne(r=>r.Order)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(o => o.OrderDetails)
-                .WithOne()
+                .WithOne(od=>od.Order)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany<Employee>(e => e.Employees)
+                .WithMany(o => o.Orders)
+                .UsingEntity(j => j.ToTable("T_Orders_Employees"));
             // Enumerated types are stored by value
             builder.Property(c => c.OrderCode)
                 .HasConversion(

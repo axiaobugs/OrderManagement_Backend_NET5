@@ -11,7 +11,7 @@ namespace orderManagement.Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
             builder.HasMany(x => x.Orders)
-                .WithOne()
+                .WithOne(o=>o.Customer)
                 .IsRequired();
             builder.Property(x => x.PaymentStatus)
                 .HasConversion(
