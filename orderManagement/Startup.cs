@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using orderManagement.Extensions;
+using orderManagement.Helpers;
 using orderManagement.Infrastructure.Data;
 
 namespace orderManagement
@@ -22,7 +23,7 @@ namespace orderManagement
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreDbContext>(x =>
                 x.UseSqlServer(Configuration["ConnectionStrings:StoreConnection"]));
@@ -43,9 +44,6 @@ namespace orderManagement
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "orderManagement v1"));
             }
-
-            app.UseHttpsRedirection();
-
             app.UseRouting();
             app.UseCors(x => x.AllowAnyHeader()
                 .AllowAnyMethod()

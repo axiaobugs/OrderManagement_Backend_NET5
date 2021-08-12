@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using orderManagement.Core.Entities.Employees;
 
 namespace orderManagement.Entities.Employees
 {

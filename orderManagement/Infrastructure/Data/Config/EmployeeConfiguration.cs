@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using orderManagement.Core.Entities.Employees;
 using orderManagement.Entities.Employees;
 
 namespace orderManagement.Infrastructure.Data.Config

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using orderManagement.Core.Entities.Employees;
 using orderManagement.Entities.Employees;
 using orderManagement.Entities.Orders;
 

@@ -46,5 +46,11 @@ namespace orderManagement.Infrastructure.Data.Repository
         {
             return await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> ExistByIdAsync<TEntity>(int id) where TEntity:BaseEntity
+        {
+            var result =await _context.Set<TEntity>().FindAsync(id);
+            return result != null;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using orderManagement.Entities.Customers;
 using orderManagement.Entities.Employees;
 using System.Collections.Generic;
+using orderManagement.Core.Entities.Employees;
 
 namespace orderManagement.Entities.Orders
 {

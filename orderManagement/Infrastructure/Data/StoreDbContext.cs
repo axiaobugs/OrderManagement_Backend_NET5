@@ -1,11 +1,9 @@
-﻿using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using orderManagement.Core.Entities.Employees;
 using orderManagement.Entities.Customers;
 using orderManagement.Entities.Employees;
 using orderManagement.Entities.Orders;
-using orderManagement.Infrastructure.Data.Config;
+using System.Reflection;
 
 namespace orderManagement.Infrastructure.Data
 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using orderManagement.Core.Entities.Employees;
 using orderManagement.Entities;
 
 namespace orderManagement.Core.Interface
@@ -8,5 +9,6 @@ namespace orderManagement.Core.Interface
     {
         IGenericRepository<TEntity> Repository<TEntity>() where TEntity : BaseEntity;
         Task<int> Complete();
+
     }
 }

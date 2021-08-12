@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using orderManagement.Core.Interface;
 using orderManagement.Infrastructure.Data.Repository;
+using orderManagement.Infrastructure.Services;
 
 namespace orderManagement.Extensions
 {
@@ -11,8 +11,7 @@ namespace orderManagement.Extensions
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
- 
+            services.AddScoped<IEmployeeService, EmployeeService>();
             return services;
         }
     }
