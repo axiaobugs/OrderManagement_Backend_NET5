@@ -26,6 +26,12 @@ namespace orderManagement.Infrastructure.Data.Repository
                 query = query.OrderByDescending(spec.OrderByDescending);
             }
 
+            // paging
+            if (spec.IsPagingEnable)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
+
             // <query> --> sequence to aggregate over.
             // <(current,include)> --> An accumulator function to apply to each element
             // <current> --> represent of the entity

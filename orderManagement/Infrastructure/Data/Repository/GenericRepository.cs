@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using orderManagement.Core.Interface;
 using orderManagement.Core.Specifications;
 using orderManagement.Entities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace orderManagement.Infrastructure.Data.Repository
 {
@@ -26,7 +25,7 @@ namespace orderManagement.Infrastructure.Data.Repository
 
         public async Task<IReadOnlyList<T>> ListAllAsync()
         {
-            return await _context.Set<T>().ToListAsync();
+            return await _context.Set<T>().Include(s=>typeof(T).MemberType).ToListAsync();
         }
 
         public async Task<T> GetEntityWithSpec(ISpecification<T> spec)

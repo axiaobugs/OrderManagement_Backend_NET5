@@ -1,12 +1,12 @@
 using Moq;
 using orderManagement.Core.Entities.Employees;
 using orderManagement.Core.Interface;
+using orderManagement.Dtos.Employees;
+using orderManagement.Infrastructure.Data;
+using orderManagement.Infrastructure.Services;
 using System;
 using System.Threading.Tasks;
-using orderManagement.Dtos.Employees;
-using orderManagement.Infrastructure.Services;
 using Xunit;
-
 
 namespace OrderManagement.Tests
 {
@@ -47,7 +47,8 @@ namespace OrderManagement.Tests
         public EmployeeServiceTests()
         {
             _mockIUnitOfWork = new Mock<IUnitOfWork>();
-            _employeeService = new EmployeeService(_mockIUnitOfWork.Object);
+            var context = new Mock<StoreDbContext>();
+            _employeeService = new EmployeeService(_mockIUnitOfWork.Object, context.Object);
         }
 
         [Fact]

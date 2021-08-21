@@ -42,9 +42,9 @@ namespace orderManagement.Infrastructure.Data.Repository
 
         }
 
-        public async Task<int> Complete()
+        public async Task<bool> Complete()
         {
-            return await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> ExistByIdAsync<TEntity>(int id) where TEntity:BaseEntity

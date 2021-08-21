@@ -9,24 +9,6 @@ namespace orderManagement.Core.Entities.Employees
 {
     public class Employee:BaseEntity
     {
-        public Employee()
-        {
-        }
-
-        public Employee(EmployeeCreateDto createDto)
-        {
-            // 
-            Name = createDto.Name;
-            Address = createDto.Address;
-            BirthDate = createDto.BirthDate;
-            WeChat = createDto.WeChat;
-            HireDate = createDto.HireDate;
-            SuperAccount = createDto.SuperAccount;
-            AnnualLeave = createDto.AnnualLeave;
-            SickLeave = createDto.SickLeave;
-            PayRate = createDto.PayRate;
-            DepartmentId = createDto.DepartmentId;
-        }
 
         public string Name { get; set; }
         public string Address { get; set; }
@@ -40,5 +22,25 @@ namespace orderManagement.Core.Entities.Employees
         public Department Department { get; set; }
         public int DepartmentId { get; set; }
         public List<Order> Orders { get; set; } = new List<Order>();
+
+
+        public static Employee CreateEmployee(EmployeeCreateDto employeeCreateDto)
+        {
+            return new Employee()
+            {
+                Name = employeeCreateDto.Name,
+                Address = employeeCreateDto.Address,
+                DepartmentId = employeeCreateDto.DepartmentId,
+                PayRate = employeeCreateDto.PayRate,
+                AnnualLeave = employeeCreateDto.AnnualLeave,
+                SickLeave = employeeCreateDto.SickLeave,
+                SuperAccount = employeeCreateDto.SuperAccount,
+                BirthDate = employeeCreateDto.BirthDate,
+                HireDate = employeeCreateDto.HireDate,
+                WeChat = employeeCreateDto.WeChat
+            };
+        }
     }
+
+    
 }

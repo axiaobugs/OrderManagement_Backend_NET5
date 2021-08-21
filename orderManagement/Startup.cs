@@ -30,7 +30,7 @@ namespace orderManagement
             services.AddApplicationServices();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "orderManagement", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order Management", Version = "v1" });
             });
             services.AddCors();
         }

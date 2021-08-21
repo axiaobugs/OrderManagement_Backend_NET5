@@ -11,7 +11,6 @@ namespace orderManagement.Infrastructure.Data
     {
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options)
         {
-
         }
 
         public DbSet<Order> Orders { get; set; }

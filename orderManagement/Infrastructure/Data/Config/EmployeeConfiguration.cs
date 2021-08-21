@@ -9,11 +9,9 @@ namespace orderManagement.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasOne<Department>(d => d.Department)
-                .WithMany(e=>e.Employees)
-                .HasForeignKey(x => x.DepartmentId)
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
+            builder.HasOne(d => d.Department)
+                .WithMany(e => e.Employees)
+                .HasForeignKey(x => x.DepartmentId);
             builder.Property(x => x.Name)
                 .HasMaxLength(100)
                 .IsRequired();

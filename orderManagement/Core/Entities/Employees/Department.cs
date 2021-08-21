@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using orderManagement.Core.Entities.Employees;
 
 namespace orderManagement.Entities.Employees
@@ -7,6 +8,6 @@ namespace orderManagement.Entities.Employees
     {
         public string Name { get; set; }
         public int ManagerId { get; set; }
-        public Employee[] Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; }
     }
 }
