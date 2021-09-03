@@ -1,5 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
-namespace orderManagement.Entities.Orders
+namespace orderManagement.Core.Entities.Orders
 {
     public enum OrderCode
     {

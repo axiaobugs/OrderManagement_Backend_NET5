@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using orderManagement.Entities.Orders;
 using System;
+using orderManagement.Core.Entities.Orders;
 
 namespace orderManagement.Infrastructure.Data.Config
 {
@@ -9,11 +10,8 @@ namespace orderManagement.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<OrderRequirementsBase> builder)
         {
-            builder.HasOne(x => x.Order)
-                .WithOne(o=>o.RequirementBase)
-                .HasForeignKey<Order>(o=>o.Id)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.NoAction);
+            //builder.HasOne(x => x.Order)
+            //    .WithOne(x => x.RequirementBase);
             builder.Property(x => x.Material)
                 .HasConversion(
                     o => o.ToString(),
@@ -28,11 +26,8 @@ namespace orderManagement.Infrastructure.Data.Config
                 .IsRequired();
             builder.HasMany(x => x.UploadFiles)
                 .WithOne(uf=>uf.OrderRequirementsBase)
-                .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
             builder.Property(x => x.DueDate)
-                .IsRequired();
-            builder.Property(x => x.OrderId)
                 .IsRequired();
         }
     }

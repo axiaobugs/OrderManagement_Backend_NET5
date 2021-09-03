@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using orderManagement.Core.Entities.Employees;
+using orderManagement.Core.Entities.Orders;
 using orderManagement.Entities.Employees;
 using orderManagement.Entities.Orders;
 
@@ -17,19 +18,23 @@ namespace orderManagement.Infrastructure.Data.Config
                 .HasForeignKey(c => c.CustomerId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
-            builder.Property(x => x.CustomerId)
-                .IsRequired();
             builder.HasOne(o => o.RequirementBase)
-                .WithOne(r=>r.Order)
-                .IsRequired()
+                .WithOne(or => or.Order)
+                .HasForeignKey<OrderRequirementsBase>(o => o.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
             builder.HasMany(o => o.OrderDetails)
-                .WithOne(od=>od.Order)
-                .IsRequired()
+                .WithOne(od => od.Order)
+                .HasForeignKey(o => o.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasMany<Employee>(e => e.Employees)
                 .WithMany(o => o.Orders)
                 .UsingEntity(j => j.ToTable("T_Orders_Employees"));
+
+            builder.Property(x => x.CustomerId)
+                    .IsRequired();
             // Enumerated types are stored by value
             builder.Property(c => c.OrderCode)
                 .HasConversion(

@@ -6,7 +6,8 @@ namespace orderManagement.Core.Specifications
     {
         public EmployeeWithFiltersForCountSpec(EmployeeSpecificationParams employeeSpecificationParams)
         :base(x=>
-            (string.IsNullOrEmpty(employeeSpecificationParams.Search)||x.Name.ToLower().Contains(employeeSpecificationParams.Search))
+            (string.IsNullOrEmpty(employeeSpecificationParams.Search)||x.Name.ToLower().Contains(employeeSpecificationParams.Search))&&
+            (!employeeSpecificationParams.DepartmentId.HasValue || x.DepartmentId == employeeSpecificationParams.DepartmentId)
             )
         {
         }

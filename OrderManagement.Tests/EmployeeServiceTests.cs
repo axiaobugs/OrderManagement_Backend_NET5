@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using orderManagement.Core.Entities.Employees;
 using orderManagement.Core.Interface;
@@ -12,7 +13,6 @@ namespace OrderManagement.Tests
 {
     public class EmployeeServiceTests
     {
-
         private readonly Employee _employee = new()
         {
             Id = 1,
@@ -44,10 +44,11 @@ namespace OrderManagement.Tests
         private readonly Mock<IUnitOfWork> _mockIUnitOfWork;
         private readonly IEmployeeService _employeeService;
 
-        public EmployeeServiceTests()
+        public EmployeeServiceTests(DbContextOptions<StoreDbContext> contextOptions)
         {
             _mockIUnitOfWork = new Mock<IUnitOfWork>();
-            var context = new Mock<StoreDbContext>();
+            var context = new Mock<StoreDbContext>(contextOptions);
+
             _employeeService = new EmployeeService(_mockIUnitOfWork.Object, context.Object);
         }
 
@@ -72,7 +73,7 @@ namespace OrderManagement.Tests
         public async Task CreateEmployee_Should_OK()
         {
             _mockIUnitOfWork.Setup(x => x.Repository<Employee>().Add(_employee));
-            _mockIUnitOfWork.Setup(x=>x.Complete().Result).Returns(1);
+            _mockIUnitOfWork.Setup(x=>x.Complete().Result).Returns((bool res)=>true);
             var response =await _employeeService.CreateEmployeeAsync(_createDto);
             Assert.Equal("Test",response.Name);
         }
@@ -83,7 +84,7 @@ namespace OrderManagement.Tests
 
             _employee.Name = "Jessi";
             _mockIUnitOfWork.Setup(x => x.Repository<Employee>().Update(_employee));
-            _mockIUnitOfWork.Setup(x => x.Complete().Result).Returns(1);
+            _mockIUnitOfWork.Setup(x => x.Complete().Result).Returns((bool res) => true);
             _mockIUnitOfWork.Setup(x => x.Repository<Employee>().GetByIdAsync(1).Result).Returns(_employee);
             var response = await _employeeService.UpdateEmployeeAsync(_employee);
             Assert.Equal("Jessi",response.Name);

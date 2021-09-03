@@ -86,6 +86,45 @@ namespace orderManagement.Migrations
                     b.ToTable("Employees");
                 });
 
+            modelBuilder.Entity("orderManagement.Core.Entities.Orders.OrderRequirementsBase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FitDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Material")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("CheckPlat");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Paint")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Thick")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("MiddleThick");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("order_requirement_base");
+                });
+
             modelBuilder.Entity("orderManagement.Entities.Customers.Customer", b =>
                 {
                     b.Property<int>("Id")
@@ -160,7 +199,8 @@ namespace orderManagement.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -217,42 +257,6 @@ namespace orderManagement.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("orderManagement.Entities.Orders.OrderRequirementsBase", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTimeOffset>("DueDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTimeOffset?>("FitDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Material")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("CheckPlat");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Paint")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thick")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("MiddleThick");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("order_requirement_base");
-                });
-
             modelBuilder.Entity("orderManagement.Entities.Orders.OrderUploadFile", b =>
                 {
                     b.Property<int>("Id")
@@ -302,6 +306,17 @@ namespace orderManagement.Migrations
                     b.Navigation("Department");
                 });
 
+            modelBuilder.Entity("orderManagement.Core.Entities.Orders.OrderRequirementsBase", b =>
+                {
+                    b.HasOne("orderManagement.Entities.Orders.Order", "Order")
+                        .WithOne("RequirementBase")
+                        .HasForeignKey("orderManagement.Core.Entities.Orders.OrderRequirementsBase", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("orderManagement.Entities.Orders.Order", b =>
                 {
                     b.HasOne("orderManagement.Entities.Customers.Customer", "Customer")
@@ -310,15 +325,7 @@ namespace orderManagement.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("orderManagement.Entities.Orders.OrderRequirementsBase", "RequirementBase")
-                        .WithOne("Order")
-                        .HasForeignKey("orderManagement.Entities.Orders.Order", "Id")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Customer");
-
-                    b.Navigation("RequirementBase");
                 });
 
             modelBuilder.Entity("orderManagement.Entities.Orders.OrderDetail", b =>
@@ -334,13 +341,18 @@ namespace orderManagement.Migrations
 
             modelBuilder.Entity("orderManagement.Entities.Orders.OrderUploadFile", b =>
                 {
-                    b.HasOne("orderManagement.Entities.Orders.OrderRequirementsBase", "OrderRequirementsBase")
+                    b.HasOne("orderManagement.Core.Entities.Orders.OrderRequirementsBase", "OrderRequirementsBase")
                         .WithMany("UploadFiles")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("OrderRequirementsBase");
+                });
+
+            modelBuilder.Entity("orderManagement.Core.Entities.Orders.OrderRequirementsBase", b =>
+                {
+                    b.Navigation("UploadFiles");
                 });
 
             modelBuilder.Entity("orderManagement.Entities.Customers.Customer", b =>
@@ -356,14 +368,8 @@ namespace orderManagement.Migrations
             modelBuilder.Entity("orderManagement.Entities.Orders.Order", b =>
                 {
                     b.Navigation("OrderDetails");
-                });
 
-            modelBuilder.Entity("orderManagement.Entities.Orders.OrderRequirementsBase", b =>
-                {
-                    b.Navigation("Order")
-                        .IsRequired();
-
-                    b.Navigation("UploadFiles");
+                    b.Navigation("RequirementBase");
                 });
 #pragma warning restore 612, 618
         }

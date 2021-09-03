@@ -6,13 +6,13 @@ namespace orderManagement.Dtos.Employees
     {
         public string Name { get; set; }
         public string Address { get; set; }
-        public DateTime BirthDate { get; set; } = new DateTime(1990,1,1);
+        public DateTime BirthDate { get; set; } 
         public string WeChat { get; set; }
-        public DateTime HireDate { get; set; } = DateTime.Now;
+        public DateTime HireDate { get; set; } 
         public string SuperAccount { get; set; }
-        public decimal AnnualLeave { get; set; } = 0;
-        public decimal SickLeave { get; set; } = 0;
-        public decimal PayRate { get; set; } = 25;
+        public decimal AnnualLeave { get; set; } 
+        public decimal SickLeave { get; set; } 
+        public decimal PayRate { get; set; }
         public int DepartmentId { get; set; }
     }
 }

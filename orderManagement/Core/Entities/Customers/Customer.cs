@@ -1,6 +1,7 @@
 ﻿using orderManagement.Entities.Orders;
 using orderManagement.Entities.Payment;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace orderManagement.Entities.Customers
 {
@@ -17,8 +18,8 @@ namespace orderManagement.Entities.Customers
             string email, 
             PaymentStatus paymentStatus, 
             PaymentMethod paymentMethod, 
-            string deliveryTo, 
-            ICollection<Order> orders)
+            string deliveryTo
+            )
         {
             Name = name;
             Address = address;
@@ -28,7 +29,6 @@ namespace orderManagement.Entities.Customers
             PaymentStatus = paymentStatus;
             PaymentMethod = paymentMethod;
             DeliveryTo = deliveryTo;
-            Orders = orders;
         }
 
 
@@ -40,6 +40,7 @@ namespace orderManagement.Entities.Customers
         public PaymentStatus PaymentStatus { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public string DeliveryTo { get; set; }
+        [JsonIgnore]
         public ICollection<Order> Orders { get; set; }
 
     }

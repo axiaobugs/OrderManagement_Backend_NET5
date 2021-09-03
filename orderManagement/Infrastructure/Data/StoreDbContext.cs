@@ -4,6 +4,7 @@ using orderManagement.Entities.Customers;
 using orderManagement.Entities.Employees;
 using orderManagement.Entities.Orders;
 using System.Reflection;
+using orderManagement.Core.Entities.Orders;
 
 namespace orderManagement.Infrastructure.Data
 {

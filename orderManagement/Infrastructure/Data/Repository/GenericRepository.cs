@@ -5,6 +5,7 @@ using orderManagement.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using orderManagement.Core.Entities.Orders;
 
 namespace orderManagement.Infrastructure.Data.Repository
 {

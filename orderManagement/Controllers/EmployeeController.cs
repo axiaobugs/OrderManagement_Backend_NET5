@@ -13,9 +13,7 @@ using orderManagement.Helpers;
 namespace orderManagement.Controllers
 {
     /// <summary>
-    ///
-    ///
-    /// TODO: need 
+    /// 
     /// </summary>
     public class EmployeeController:BaseController
     {
@@ -84,7 +82,8 @@ namespace orderManagement.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteEmployeeById(int id)
         {
-            Console.WriteLine(id);
+            // TODO: fetch employee method should put in the employee service
+            //       this layer proccess internet request only.
             var employee = await _unitOfWork.Repository<Employee>().GetByIdAsync(id);
             var result = await _employeeService.DeleteEmployeeByIdAsync(employee);
             return result?Ok(new ApiResponse(200)):BadRequest(new ApiResponse(400, "problem delete employee"));

@@ -1,4 +1,6 @@
-﻿namespace orderManagement.Entities.Orders
+﻿using orderManagement.Core.Entities.Orders;
+
+namespace orderManagement.Entities.Orders
 {
     public class OrderUploadFile:BaseEntity
     {

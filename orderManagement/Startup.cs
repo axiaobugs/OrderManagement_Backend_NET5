@@ -24,7 +24,7 @@ namespace orderManagement
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(MappingProfiles));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddDbContext<StoreDbContext>(x =>
                 x.UseSqlServer(Configuration["ConnectionStrings:StoreConnection"]));
             services.AddApplicationServices();

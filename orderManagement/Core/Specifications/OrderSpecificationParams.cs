@@ -1,7 +1,11 @@
-﻿namespace orderManagement.Core.Specifications
+﻿using orderManagement.Entities.Orders;
+
+namespace orderManagement.Core.Specifications
 {
-    public class EmployeeSpecificationParams
+    public class OrderSpecificationParams
     {
+
+        // Pagination
         private const int MaxPageSize = 50;
         public int PageIndex { get; set; } = 1;
         private int _pageSize = 6;
@@ -11,12 +15,13 @@
             set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
 
-        // filtering
-        public int? DepartmentId { get; set; }
+        //Filtering
+        public OrderStatus? OrderStatus { get; set; }
         public string Sort { get; set; }
 
 
 
+        // Search
         private string _search;
         public string Search
         {

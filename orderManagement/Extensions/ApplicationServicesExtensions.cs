@@ -12,6 +12,7 @@ namespace orderManagement.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IOrderService, OrderService>();
             return services;
         }
     }
