@@ -11,6 +11,6 @@ namespace orderManagement.Core.Interface
         Task<IReadOnlyList<Employee>> GetAllEmployees();
         Task<Employee> GetEmployeeById(int id);
         Task<Employee> UpdateEmployeeAsync(Employee employee);
-        Task<bool> DeleteEmployeeByIdAsync(Employee employee);
+        Task<bool> DeleteEmployeeByIdAsync(int id);
     }
 }

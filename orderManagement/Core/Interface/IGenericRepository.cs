@@ -7,8 +7,6 @@ namespace orderManagement.Core.Interface
 {
     public interface IGenericRepository<T> where T:BaseEntity
     {
-        // TODO: need add eager loading method. for list and single
-
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> ListAllAsync();
         Task<T> GetEntityWithSpec(ISpecification<T> spec);

@@ -52,12 +52,12 @@ namespace orderManagement.Infrastructure.Services
             return await _unitOfWork.Complete() ? null : employee;
         }
 
-        public async Task<bool> DeleteEmployeeByIdAsync(Employee employee)
+        public async Task<bool> DeleteEmployeeByIdAsync(int id)
         {
+            var employee = await _unitOfWork.Repository<Employee>().GetByIdAsync(id);
             if (employee == null) return false;
-            _unitOfWork.Repository<Employee>().Delete(employee);
-            var result = await _unitOfWork.Complete();
-            return result;
+            _unitOfWork.Repository<Employee>().Delete(employee);           
+            return await _unitOfWork.Complete();;
         }
     }
 }
