@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using orderManagement.Core.Entities.Employees;
+using orderManagement.Core.Entities.Identity;
 using orderManagement.Core.Entities.Orders;
 using orderManagement.Dtos.Employees;
+using orderManagement.Dtos.Identity;
 using orderManagement.Dtos.Order;
 using orderManagement.Entities.Customers;
 using orderManagement.Entities.Orders;
@@ -38,6 +40,8 @@ namespace orderManagement.Helpers
             CreateMap<OrderCreateDto, Order>()
                 .ForMember(d => d.OrderCode, o => o.MapFrom(s => s.OrderCode))
                 .ForMember(d => d.OrderStatus, o => o.MapFrom(s => s.OrderStatus));
+            CreateMap<RegisterDto, AppUser>();
+            CreateMap<AppRole, RoleDto>();
 
 
         }

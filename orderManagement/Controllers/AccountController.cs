@@ -16,9 +16,11 @@ namespace orderManagement.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
+        private readonly RoleManager<AppRole> _roleManager;
 
         public AccountController(UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
+            RoleManager<AppRole> roleManager,
             ITokenService tokenService,
             IMapper mapper)
         {
@@ -26,6 +28,25 @@ namespace orderManagement.Controllers
             _signInManager = signInManager;
             _tokenService = tokenService;
             _mapper = mapper;
+            _roleManager = roleManager;
+        }
+
+        [HttpPost("role")]
+        public async Task<ActionResult<RoleDto>> CreateRole(RoleDto roleDto)
+        {
+            var roleGet = await _roleManager.FindByNameAsync(roleDto.Name);
+            if (roleGet != null) return BadRequest("Role is exist");
+            var role = new AppRole()
+            {
+                Name = roleDto.Name,
+                NormalizedName = roleDto.Name.ToUpper()
+            };
+            var result = await _roleManager.CreateAsync(role);
+            if (result.Succeeded) 
+            {
+                return Ok(_mapper.Map<RoleDto>(role));
+            }
+            return BadRequest("Some thing wrong when create a role");
         }
 
         [HttpPost("register")]
@@ -52,8 +73,6 @@ namespace orderManagement.Controllers
         private async Task<bool> UserExists(string username)
         {
             return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
-
-
         }
     }
 }
