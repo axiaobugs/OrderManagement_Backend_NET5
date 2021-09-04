@@ -17,7 +17,7 @@ namespace orderManagement.Infrastructure.Services
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IConfiguration _config;
-        private readonly Microsoft.IdentityModel.Tokens.SymmetricSecurityKey _key;
+        private readonly SymmetricSecurityKey _key;
 
 
         public TokenService(IConfiguration config, UserManager<AppUser> userManager)

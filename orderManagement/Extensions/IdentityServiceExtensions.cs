@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using orderManagement.Core.Entities.Identity;
 using orderManagement.Infrastructure.Data;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace orderManagement.Extensions
 {
@@ -36,11 +35,11 @@ namespace orderManagement.Extensions
                     };
                 });
 
-            // FIXME: Role need modify later
+            //TODO: Role policy need modify later
             service.AddAuthorization(opt =>
             {
-                opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-                opt.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+                opt.AddPolicy("AdminRole", policy => policy.RequireRole("Admin"));
+                opt.AddPolicy("WorkerRole", policy => policy.RequireRole("Worker"));
             });
 
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using orderManagement.Core.Entities.Identity;
 using orderManagement.Core.Interface;
 using orderManagement.Dtos.Identity;
-using orderManagement.Errors;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace orderManagement.Controllers
@@ -91,6 +91,45 @@ namespace orderManagement.Controllers
             var userDto = _mapper.Map<UserDto>(user);
             userDto.Token = await _tokenService.CreateToken(user);
             return Ok(userDto);
+        }
+
+        // add a role to user
+        // TODO: Add Authorize when deployment
+        [HttpPut("role/{username}")]
+        public async Task<ActionResult<UserDto>> AddRoleToUser(string username, [FromQuery] string roles)
+        {
+            var selectedRoles = roles.Split(",").ToArray();
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null) return NotFound("Not find the user");
+            // get current roles from the user
+            var userRoles = await _userManager.GetRolesAsync(user);
+            // add new role base on the current roles
+            var result = await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles));
+            if (!result.Succeeded) return BadRequest("Failed to add to roles");
+            result = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles));
+            if (!result.Succeeded) return BadRequest("Failed to remove from the roles");
+            return Ok(await _userManager.GetRolesAsync(user));
+        }
+
+        // get  user of the all role
+        // TODO: Add Authorize when deployment
+        // TODO: Add Pagination with return
+        [HttpGet("usersroles")]
+        public async Task<ActionResult> GetUserWithRole()
+        {
+            var users = await _userManager.Users
+                .Include(r => r.UserRoles)
+                .ThenInclude(r => r.Role)
+                .OrderBy(u => u.UserName)
+                .Select(u => new
+                {
+                    u.Id,
+                    Username = u.UserName,
+                    Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
+
+                })
+                .ToListAsync();
+            return Ok(users);
         }
 
 

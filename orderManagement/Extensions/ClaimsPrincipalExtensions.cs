@@ -10,7 +10,7 @@ namespace orderManagement.Extensions
     {
         public static string RetrieveEmailFromPrincipal(this ClaimsPrincipal user)
         {
-            return user.FindFirstValue(ClaimTypes.Email);
+            return user.FindFirstValue(ClaimTypes.Name);
         }
     }
 }
