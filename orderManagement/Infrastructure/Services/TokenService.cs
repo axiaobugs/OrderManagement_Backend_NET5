@@ -33,6 +33,8 @@ namespace orderManagement.Infrastructure.Services
             {
                 new Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.UniqueName,user.UserName),
+                new Claim("EmployeeId",user.EmployeeId.ToString()),
+
 
             };
 

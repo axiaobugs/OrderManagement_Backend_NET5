@@ -42,6 +42,7 @@ namespace orderManagement.Helpers
                 .ForMember(d => d.OrderStatus, o => o.MapFrom(s => s.OrderStatus));
             CreateMap<RegisterDto, AppUser>();
             CreateMap<AppRole, RoleDto>();
+            CreateMap<AppUser, UserDto>();
 
 
         }
