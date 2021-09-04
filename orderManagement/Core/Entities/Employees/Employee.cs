@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using orderManagement.Core.Entities.Identity;
 using orderManagement.Dtos.Employees;
 using orderManagement.Entities;
 using orderManagement.Entities.Employees;
@@ -22,6 +23,7 @@ namespace orderManagement.Core.Entities.Employees
         public decimal PayRate { get; set; }
         public Department Department { get; set; }
         public int DepartmentId { get; set; }
+        public AppUser User { get; set; }
         [JsonIgnore]
         public List<Order> Orders { get; set; } = new List<Order>();
 

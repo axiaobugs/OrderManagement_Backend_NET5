@@ -28,6 +28,7 @@ namespace orderManagement
             services.AddDbContext<StoreDbContext>(x =>
                 x.UseSqlServer(Configuration["ConnectionStrings:StoreConnection"]));
             services.AddApplicationServices();
+            services.AddIdentityServices(Configuration);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order Management", Version = "v1" });

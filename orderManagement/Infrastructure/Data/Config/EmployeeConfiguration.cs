@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using orderManagement.Core.Entities.Employees;
+using orderManagement.Core.Entities.Identity;
 using orderManagement.Entities.Employees;
 
 namespace orderManagement.Infrastructure.Data.Config
@@ -12,6 +13,9 @@ namespace orderManagement.Infrastructure.Data.Config
             builder.HasOne(d => d.Department)
                 .WithMany(e => e.Employees)
                 .HasForeignKey(x => x.DepartmentId);
+            builder.HasOne(u => u.User)
+                .WithOne(e => e.Employee)
+                .HasForeignKey<AppUser>(x => x.EmployeeId);
             builder.Property(x => x.Name)
                 .HasMaxLength(100)
                 .IsRequired();
