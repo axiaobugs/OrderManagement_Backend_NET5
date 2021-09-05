@@ -1,20 +1,22 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using orderManagement.Core.Entities.Employees;
 using orderManagement.Core.Interface;
-using orderManagement.Dtos.Employees;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using orderManagement.Core.Specifications;
+using orderManagement.Dtos.Employees;
 using orderManagement.Errors;
 using orderManagement.Helpers;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace orderManagement.Controllers
 {
     /// <summary>
     /// 
     /// </summary>
+    /// 
+
     public class EmployeeController:BaseController
     {
         private readonly IEmployeeService _employeeService;
@@ -39,7 +41,9 @@ namespace orderManagement.Controllers
             return Ok(response);
         }
 
+
         [HttpGet]
+        [Authorize(Policy = "AdminRole")]
         public async Task<ActionResult<Pagination<EmployeeReturnDto>>> GetAllEmployee([FromQuery]EmployeeSpecificationParams employeeSpecificationParams)
         {
             var spec = new EmployeeWithSpecification(employeeSpecificationParams);

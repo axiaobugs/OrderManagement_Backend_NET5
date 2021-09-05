@@ -22,16 +22,20 @@ namespace orderManagement.Extensions
                 .AddRoleValidator<RoleValidator<AppRole>>()
                 .AddEntityFrameworkStores<StoreDbContext>();
 
-            service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            service.AddAuthentication(op=> {
+                op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                op.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                op.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(op =>
                 {
-                    op.TokenValidationParameters = new TokenValidationParameters()
+                    op.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Token:Key"])),
-                        ValidIssuer = config["Token:Issuer"],
-                        ValidateIssuer = true,
-                        ValidateAudience = false
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateActor=false
                     };
                 });
 
