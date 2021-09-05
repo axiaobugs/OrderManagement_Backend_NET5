@@ -32,6 +32,38 @@ namespace orderManagement
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order Management", Version = "v1" });
+                var securityScheme = new OpenApiSecurityScheme()
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    // Parameters added to the header
+                    In = ParameterLocation.Header,
+                    // Use Authorize header
+                    Type = SecuritySchemeType.Http,
+                    // Content starts with bearer
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                };
+
+                // Configure all methods to add bearer headers
+                var securityRequirement = new OpenApiSecurityRequirement
+                    {
+                        {
+                                new OpenApiSecurityScheme
+                                {
+                                    Reference = new OpenApiReference
+                                    {
+                                        Type = ReferenceType.SecurityScheme,
+                                        Id = "bearerAuth"
+                                    }
+                                },
+                                new string[] {}
+                        }
+                    };
+
+                // Register to swagger
+                c.AddSecurityDefinition("bearerAuth", securityScheme);
+                c.AddSecurityRequirement(securityRequirement);
             });
             services.AddCors();
         }

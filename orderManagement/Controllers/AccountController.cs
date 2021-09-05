@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace orderManagement.Controllers
         }
         #endregion
 
-
+        [Authorize(Policy = "AdminRole")]
         [HttpPost("role")]
         public async Task<ActionResult<RoleDto>> CreateRole(RoleDto roleDto)
         {
@@ -93,8 +94,7 @@ namespace orderManagement.Controllers
             return Ok(userDto);
         }
 
-        // add a role to user
-        // TODO: Add Authorize when deployment
+        //[Authorize(Policy = "AdminRole")]
         [HttpPut("role/{username}")]
         public async Task<ActionResult<UserDto>> AddRoleToUser(string username, [FromQuery] string roles)
         {
@@ -111,8 +111,7 @@ namespace orderManagement.Controllers
             return Ok(await _userManager.GetRolesAsync(user));
         }
 
-        // get  user of the all role
-        // TODO: Add Authorize when deployment
+        
         // TODO: Add Pagination with return
         [HttpGet("usersroles")]
         public async Task<ActionResult> GetUserWithRole()

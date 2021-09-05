@@ -29,6 +29,8 @@ namespace orderManagement.Extensions
             })
                 .AddJwtBearer(op =>
                 {
+
+                    // NOTE: Remember to modify the parameters that need to be verified during actual production
                     op.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
@@ -39,11 +41,16 @@ namespace orderManagement.Extensions
                     };
                 });
 
-            //TODO: Role policy need modify later
+            // NOTE: Modify the appropriate permission policy when it is actually applied
             service.AddAuthorization(opt =>
             {
                 opt.AddPolicy("AdminRole", policy => policy.RequireRole("Admin"));
                 opt.AddPolicy("WorkerRole", policy => policy.RequireRole("Worker"));
+                // GeneralViewMode counld't check like employee salary or order price etc Sensitive Information
+                opt.AddPolicy("GeneralViewMode", policy => policy.RequireRole("Worker,Admin,Engineering,Sale,Office"));
+                // DetailViewMode could check all of the Sensitive Information
+                opt.AddPolicy("DetailViewMode", policy => policy.RequireRole("Engineering"));
+                opt.AddPolicy("EditMode", policy => policy.RequireRole("Admin,Engineering,Sale"));
             });
 
 
