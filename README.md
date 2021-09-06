@@ -10,5 +10,9 @@ This private project is a migration version of a company employee and order mana
 3. Just run dotnet watch run.
 
 # TODO
+- [x] Add employee login function and assign different departmental privileges.
+- [x] Persistent login status
+- [x] Add interceptors and guards
+- [ ] Implementing component-level permission management
 - [ ] I'm trying to write unit tests to refine the iterations of the feature, and I don't have a clue for now.
-- [ ] Add employee login function and assign different departmental privileges.
+
