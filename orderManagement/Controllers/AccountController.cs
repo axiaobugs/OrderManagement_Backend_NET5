@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using orderManagement.Core.Entities.Identity;
 using orderManagement.Core.Interface;
+using orderManagement.Core.Specifications;
 using orderManagement.Dtos.Identity;
+using orderManagement.Extensions;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,7 +35,11 @@ namespace orderManagement.Controllers
             _roleManager = roleManager;
         }
         #endregion
-
+        /// <summary>
+        /// create a Role
+        /// </summary>
+        /// <param name="roleDto"></param>
+        /// <returns></returns>
         [Authorize(Policy = "AdminRole")]
         [HttpPost("role")]
         public async Task<ActionResult<RoleDto>> CreateRole(RoleDto roleDto)
@@ -67,12 +73,15 @@ namespace orderManagement.Controllers
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (!result.Succeeded) return BadRequest(result.Errors);
 
-            var roleResult = await _userManager.AddToRoleAsync(user, "Work");
+            var roleResult = await _userManager.AddToRoleAsync(user, "Worker");
             if (!roleResult.Succeeded) return BadRequest(roleResult.Errors);
 
             return new UserDto
             {
+                Id = user.Id,
                 Username = user.UserName,
+                Email = user.Email,
+                EmployeeId = user.EmployeeId,
                 Token = await _tokenService.CreateToken(user),
             };
         }
@@ -129,6 +138,42 @@ namespace orderManagement.Controllers
                 })
                 .ToListAsync();
             return Ok(users);
+        }
+
+        [Authorize]
+        [HttpGet("user")]
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var user = await _userManager.FindByEmailFromClaimPrinciple(User);
+            return new UserDto()
+            {
+                Id = user.Id,
+                Username = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                Email = user.Email,
+                EmployeeId = user.EmployeeId
+
+            };
+        }
+
+        /// <summary>
+        /// check username or email exist when register
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("exist")]
+        public async Task<bool> CheckExist([FromQuery] string email = "",
+                                            [FromQuery] string userName = "")
+        {
+            if (!string.IsNullOrEmpty(email) && !string.IsNullOrWhiteSpace(email))
+            {
+                return await _userManager.FindByEmailAsync(email) !=null;
+            }
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrWhiteSpace(userName))
+            {
+                return await _userManager.FindByNameAsync(userName) != null;
+            }
+            return false;
+           
         }
 
 

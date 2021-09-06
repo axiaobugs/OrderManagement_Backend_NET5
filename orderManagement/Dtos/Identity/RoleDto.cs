@@ -7,6 +7,9 @@ namespace orderManagement.Dtos.Identity
 {
     public class RoleDto
     {
+        /// <summary>
+        /// Role name 
+        /// </summary>
         public string Name { get; set; }
     }
 }

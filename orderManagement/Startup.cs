@@ -8,6 +8,9 @@ using Microsoft.OpenApi.Models;
 using orderManagement.Extensions;
 using orderManagement.Helpers;
 using orderManagement.Infrastructure.Data;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace orderManagement
 {
@@ -29,6 +32,7 @@ namespace orderManagement
                 x.UseSqlServer(Configuration["ConnectionStrings:StoreConnection"]));
             services.AddApplicationServices();
             services.AddIdentityServices(Configuration);
+            #region Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order Management", Version = "v1" });
@@ -60,11 +64,17 @@ namespace orderManagement
                                 new string[] {}
                         }
                     };
+                // 使用反射获取xml文件。并构造出文件的路径
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                // 启用xml注释. 该方法第二个参数启用控制器的注释，默认为false.
+                c.IncludeXmlComments(xmlPath, true);
 
                 // Register to swagger
                 c.AddSecurityDefinition("bearerAuth", securityScheme);
                 c.AddSecurityRequirement(securityRequirement);
             });
+            #endregion
             services.AddCors();
         }
 

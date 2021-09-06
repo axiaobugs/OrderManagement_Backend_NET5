@@ -32,6 +32,7 @@ namespace orderManagement.Infrastructure.Services
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email,user.Email),
                 new Claim(JwtRegisteredClaimNames.UniqueName,user.UserName),
                 new Claim("EmployeeId",user.EmployeeId.ToString()),
 
