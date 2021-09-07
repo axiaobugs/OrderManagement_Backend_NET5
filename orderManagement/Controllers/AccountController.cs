@@ -98,7 +98,9 @@ namespace orderManagement.Controllers
 
             if (!result.Succeeded) return Unauthorized();
 
+            var roles = await _userManager.GetRolesAsync(user);
             var userDto = _mapper.Map<UserDto>(user);
+            userDto.Roles = roles;
             userDto.Token = await _tokenService.CreateToken(user);
             return Ok(userDto);
         }
@@ -151,7 +153,8 @@ namespace orderManagement.Controllers
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 Email = user.Email,
-                EmployeeId = user.EmployeeId
+                EmployeeId = user.EmployeeId,
+                Roles = await _userManager.GetRolesAsync(user)
 
             };
         }

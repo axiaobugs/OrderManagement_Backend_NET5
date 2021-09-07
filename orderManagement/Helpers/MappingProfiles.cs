@@ -43,8 +43,6 @@ namespace orderManagement.Helpers
             CreateMap<RegisterDto, AppUser>();
             CreateMap<AppRole, RoleDto>();
             CreateMap<AppUser, UserDto>();
-
-
         }
 
 
